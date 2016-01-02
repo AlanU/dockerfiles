@@ -54,10 +54,10 @@ RUN mkdir -p /tmp/qt \
     && /tmp/qt/installer.run --runoperation QtPatch linux $QT_ANDROID qt5 \
     && rm -rf /tmp/qt
 
-# Download & unpack android SDK
+# Download & unpack android SDK, install additional sdks
 RUN mkdir /tmp/android && curl -Lo /tmp/android/sdk.tgz 'http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz' \
     && tar --no-same-owner -xf /tmp/android/sdk.tgz -C /opt \
-    && rm -rf /tmp/android && echo "y" | android update sdk -u -a -t tools,platform-tools,build-tools-21.1.2,$ANDROID_NDK_PLATFORM
+    && rm -rf /tmp/android && echo "y" | android update sdk -u -a -t tools,platform-tools,build-tools-21.1.2,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,extra-google-play_apk_expansion,$ANDROID_NDK_PLATFORM
 
 # Download & unpack android NDK
 RUN mkdir /tmp/android && cd /tmp/android && curl -Lo ndk.bin 'http://dl.google.com/android/ndk/android-ndk-r10e-linux-x86_64.bin' \
